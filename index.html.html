@@ -1,0 +1,419 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>치지직 스트리머 리포트</title>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4fa;--sf:#fff;--ink:#1d1a33;--mut:#6b6885;--ln:#e2e0ee;--ac:#5b3df5;--up:#0a8f5b;--dn:#d23a52;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121f;--sf:#1d1a2e;--ink:#efedfa;--mut:#9a97b5;--ln:#2d2a45;--ac:#9b86ff;--up:#3fd49a;--dn:#ff7088}}
+:root[data-theme="dark"]{--bg:#14121f;--sf:#1d1a2e;--ink:#efedfa;--mut:#9a97b5;--ln:#2d2a45;--ac:#9b86ff;--up:#3fd49a;--dn:#ff7088}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Gothic A1",system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:24px;font-weight:800;margin:0 0 2px}
+h2{font-size:16px;font-weight:800;margin:28px 0 10px}
+a{color:var(--ac)}
+.sub{color:var(--mut);margin:0 0 16px;font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.seg{display:inline-flex;border:1px solid var(--ln);border-radius:8px;overflow:hidden;background:var(--sf)}
+.seg button{border:0;background:none;color:var(--mut);padding:7px 14px;font:inherit;font-weight:600;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ac);color:#fff}
+select,input,textarea,button.b{font:inherit;color:var(--ink);background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:7px 10px}
+button.b{cursor:pointer;font-weight:600}button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));background:var(--sf);border:1px solid var(--ln);border-radius:10px}
+.kpi div{padding:14px 16px;border-right:1px solid var(--ln)}.kpi div:last-child{border:0}
+.kpi small{color:var(--mut);display:block;font-size:12px}
+.kpi b{font-size:24px;font-weight:800;display:block;line-height:1.2}
+.d{font-size:12px;font-weight:600}.up{color:var(--up)}.dn{color:var(--dn)}.na{color:var(--mut)}
+.box{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.tabs button{border:0;background:none;color:var(--mut);font:inherit;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.sc{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--ln);white-space:nowrap}
+th:first-child,td:first-child,td.l,th.l{text-align:left}th{color:var(--mut);font-weight:600;font-size:12px}
+tr.sel td{background:color-mix(in srgb,var(--ac) 10%,transparent);font-weight:600}
+.ins{margin:0 0 10px;padding-left:18px}.ins li{margin:3px 0}
+#rep{width:100%;min-height:200px;line-height:1.7;resize:vertical}
+details{margin-top:28px}summary{cursor:pointer;font-weight:800}
+.note{color:var(--mut);font-size:12px;margin:6px 0}
+.add input{flex:1 1 220px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.chip{display:inline-flex;border:1px solid var(--ln);border-radius:999px;background:var(--sf);overflow:hidden}
+.chip.on{border-color:var(--ac)}
+.chip button{border:0;background:none;color:var(--ink);font:inherit;cursor:pointer;padding:7px 12px}
+.chip .cn{font-weight:600}
+.chip.on .cn{background:var(--ac);color:var(--bg)}
+.chip .cx{color:var(--mut);border-left:1px solid var(--ln);padding:7px 11px}
+.chip .cx.ask{color:var(--dn);font-weight:700}
+.fld{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:8px}
+.fld label{font-size:12px;color:var(--mut);display:block}
+.fld input{width:100%}
+.leg{font-size:12px;color:var(--mut);margin:4px 0 8px}
+button.sm{padding:3px 9px;font-size:12px;cursor:pointer;font-weight:600}
+#pv{width:100%;max-height:420px;background:#000;border-radius:8px;margin-top:8px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+</style></head>
+<body><main>
+<h1>치지직 스트리머 리포트</h1>
+<p class="sub" id="src"></p>
+
+<div class="chips" id="chips" aria-label="스트리머 선택"></div>
+<div class="bar add">
+ <input id="url" placeholder="치지직 채널 링크 (chzzk.naver.com/채널ID)" aria-label="채널 링크">
+ <input id="nm" placeholder="스트리머 이름" aria-label="스트리머 이름" style="flex:0 1 150px">
+ <button class="b p" id="addc">추가</button>
+</div>
+<p class="note" id="amsg"></p>
+
+<div class="bar"><span id="link" class="note"></span></div>
+<div class="bar">
+ <div class="seg" role="group" aria-label="기간 단위"><button id="mDay" aria-pressed="true">일간</button><button id="mWeek" aria-pressed="false">주간</button></div>
+ <select id="per" aria-label="기간"></select>
+</div>
+
+<div class="kpi" id="kpi"></div>
+
+<h2>추이</h2>
+<div class="box"><div class="tabs" id="tabs"></div><div id="chart"></div></div>
+
+<h2>기간별 데이터</h2>
+<div class="box sc"><table id="tbl"></table></div>
+
+<h2>카테고리 전환 구간</h2>
+<p class="note">선택한 기간의 방송을 카테고리가 바뀐 지점마다 나눈 기록입니다.</p>
+<div class="box sc"><table id="seg"></table></div>
+
+<h2>카테고리별 분석</h2>
+<div class="box">
+ <ul class="ins" id="ins"></ul>
+ <div class="sc"><table id="cat"></table></div>
+ <p class="note">전체 기간 기준이며, 카테고리 방송시간이 3시간 미만이면 표본이 적어 참고용입니다(※). 시간당 수치는 방송시간이 달라도 비교할 수 있게 맞춘 값입니다.</p>
+</div>
+
+<h2>노래방송 타임라인</h2>
+<div class="box">
+ <div class="bar">
+  <select id="vsel" aria-label="다시보기 선택"></select>
+  <button class="b" id="vnew">+ 다시보기 추가</button>
+  <button class="b" id="vdel">삭제</button>
+ </div>
+ <p class="note" id="vempty">노래방송 다시보기를 추가하면 곡마다 구간을 나눠 볼 수 있어요. 선택한 스트리머별로 저장됩니다.</p>
+ <div id="vbody">
+  <div class="fld">
+   <div><label for="vt">제목</label><input id="vt" placeholder="예: 11/4 노래방송"></div>
+   <div><label for="vu">다시보기 링크 (바로가기용)</label><input id="vu" placeholder="치지직 다시보기 주소"></div>
+   <div><label for="vl">방송 총 길이</label><input id="vl" placeholder="2:30:00"></div>
+  </div>
+  <label class="note" for="vs">곡 목록: 한 줄에 “시작 시각 곡명”. 종료 시각을 알면 “시작-종료 곡명”으로 적어요. 링크만으로 곡을 자동 인식하진 못해서 직접 적어 주세요.</label>
+  <textarea id="vs" rows="6" style="width:100%" placeholder="0:05:20 곡명 A&#10;0:09:40 곡명 B&#10;0:14:05-0:18:30 곡명 C"></textarea>
+  <details style="margin-top:8px"><summary>분당 시청자·채팅 데이터 (선택)</summary>
+   <p class="note">한 줄에 “시각,시청자,채팅수”. 시각은 방송 시작 기준(0:12:00)이고, 1분 간격이면 가장 정확해요. 넣으면 곡별 시청자·채팅 비교와 반응 급증 구간 찾기가 켜집니다. 노래하지 않은 구간의 데이터가 섞여 있어도 곡 구간 밖은 분석에서 빠져요.</p>
+   <textarea id="vm" rows="5" style="width:100%" placeholder="0:12:00,152,640&#10;0:13:00,160,820"></textarea>
+  </details>
+  <div class="bar" style="margin-top:8px"><button class="b p" id="vapply">적용</button><button class="b" id="vcopy">시각 목록 복사</button><span id="vgo" class="note"></span><span class="note" id="vmsg"></span></div>
+  <div id="vtl"></div>
+  <p class="leg"><span class="dot" style="background:var(--ac)"></span>곡 구간 <span class="dot" style="background:var(--dn);margin-left:8px"></span>채팅 반응 급증(노래 구간만, 위) <span class="dot" style="background:var(--up);margin-left:8px"></span>편집 후보(아래)</p>
+  <ul class="ins" id="vins"></ul>
+  <div class="sc"><table id="vtab"></table></div>
+ </div>
+</div>
+
+<h2>영상으로 보기</h2>
+<div class="box" id="pbox">
+ <p class="note">치지직 링크로는 영상을 가져올 수 없어서, 다운로드해 둔 다시보기 영상 파일(mp4 등)을 선택해 주세요. 파일은 이 브라우저에서만 재생되고 어디에도 올라가지 않아요. 곡 표와 편집 후보 표의 “▶ 재생”을 누르면 그 구간만 재생하고, “저장”은 그 구간을 영상 파일(webm)로 녹화해 저장해요.</p>
+ <div class="bar"><input type="file" id="pf" accept="video/*" aria-label="다시보기 영상 파일"><label class="note">영상 시작 보정(초) <input id="po" type="number" value="0" style="width:80px"></label></div>
+ <div class="bar"><button class="b" id="pall">노래 구간만 이어보기</button><button class="b" id="phl">편집 후보 이어보기</button><button class="b" id="pstop">정지</button></div>
+ <video id="pv" controls playsinline hidden></video>
+ <p class="note" id="pmsg"></p>
+</div>
+
+<h2>편집점 추천</h2>
+<div class="box" id="ebody">
+ <div class="bar">
+  <div class="seg" role="group" aria-label="편집 종류"><button id="eShort" aria-pressed="true">숏폼</button><button id="eLong" aria-pressed="false">롱폼 하이라이트</button></div>
+  <label class="note"><span id="enl">개수</span> <input id="en" type="number" min="1" max="20" value="5" style="width:72px"></label>
+  <button class="b" id="elocal">반응 기준 후보 찾기</button>
+  <button class="b p" id="eai">Claude로 편집점 짜기</button>
+ </div>
+ <textarea id="enote" rows="2" style="width:100%" placeholder="메모(선택): 예) 3번 곡에서 시청자 드립 폭주, 마지막 곡 고음 성공"></textarea>
+ <p class="note" id="emsg">영상 화면은 분석하지 않아요. 입력한 곡 구간, 분당 시청자·채팅, 메모만 근거로 후보를 만듭니다.</p>
+ <div class="sc"><table id="etab"></table></div>
+ <div class="bar" style="margin-top:8px"><button class="b" id="ecopy">후보 복사</button><button class="b" id="eclear">후보 비우기</button></div>
+</div>
+
+<h2>스트리머에게 보낼 리포트</h2>
+<div class="box">
+ <textarea id="rep" aria-label="리포트 문구"></textarea>
+ <div class="bar" style="margin:8px 0 0"><button class="b p" id="copy">리포트 복사</button><span class="note" id="cmsg"></span></div>
+</div>
+
+<details id="dt">
+ <summary>선택한 스트리머의 데이터 불러오기</summary>
+ <p class="note">구글 시트나 엑셀에서 복사해 붙여넣거나 CSV 파일을 선택하세요. 카테고리가 바뀔 때마다 한 줄씩 적습니다(같은 날 여러 줄 가능). 숫자에는 쉼표를 넣지 않아요. 이 브라우저에만 저장됩니다.<br>
+ 열 순서: 날짜(2026-11-05), 카테고리, 최고 시청자, 평균 시청자, 채팅수, 치즈 수익(원), 방송시간(시간)</p>
+ <textarea id="imp" rows="6" style="width:100%" placeholder="2026-11-05,노래,152,98,640,28000,1.5&#10;2026-11-05,리그 오브 레전드,120,84,2100,12000,2.5"></textarea>
+ <div class="bar" style="margin-top:8px"><input type="file" id="file" accept=".csv,.tsv,.txt"><button class="b p" id="apply">이 스트리머 데이터로 적용</button></div>
+ <p class="note" id="imsg"></p>
+</details>
+</main>
+<script>
+const $=s=>document.querySelector(s),N=v=>Math.round(v).toLocaleString('ko-KR'),DOW=['일','월','화','수','목','금','토'];
+const pad=n=>String(n).padStart(2,'0'),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const dt=s=>new Date(s+'T00:00:00');
+const addD=(s,n)=>{const d=dt(s);d.setDate(d.getDate()+n);return fmt(d)};
+const wk=s=>{const d=dt(s);d.setDate(d.getDate()-(d.getDay()+6)%7);return fmt(d)};
+const md=s=>+s.slice(5,7)+'/'+ +s.slice(8);
+const S=(a,k)=>a.reduce((x,r)=>x+r[k],0);
+const METRICS=[['peak','최고 시청자','명'],['avg','평균 시청자','명'],['chat','채팅수','건'],['cheese','치즈 수익','원'],['hours','방송시간','시간']];
+let D={channels:[],rows:[]},st={mode:'day',per:null,m:'peak',ch:null};
+try{const s=JSON.parse(localStorage.getItem('cz2')||'null');if(s&&Array.isArray(s.channels))D=s}catch(e){}
+const save=()=>{try{localStorage.setItem('cz2',JSON.stringify(D))}catch(e){}};
+
+function rng(s){return()=>(s=(s*1664525+1013904223)%4294967296)/4294967296}
+const SC={id:'sample',name:'샘플 스트리머'};
+const SR=(()=>{const C=[['저스트 채팅',100,60],['노래',150,14],['리그 오브 레전드',110,22],['마인크래프트',85,30]],out=[],end=new Date(2026,10,5);
+ for(let i=55;i>=0;i--){const d=new Date(end);d.setDate(end.getDate()-i);const r=rng(i*31+7);if(r()<.2)continue;
+  const a=Math.floor(r()*4),b=(a+1+Math.floor(r()*3))%4,two=r()<.6;
+  (two?[a,b]:[a]).forEach(k=>{const[c,base,cf]=C[k],h=+(1+r()*2.5).toFixed(1),avg=Math.round(base*(.8+r()*.5));
+   out.push({ch:'sample',date:fmt(d),cat:c,peak:Math.round(avg*(1.4+r()*.6)),avg,chat:Math.round(h*cf*avg/10*(.8+r()*.4)),cheese:Math.round(avg*h*(3+r()*5))*100,hours:h})})}
+ return out})();
+
+function parse(t,ch){return t.split(/\r?\n/).map(l=>(l.includes('\t')?l.split('\t').map(x=>x.replace(/,/g,'')):l.split(',')).map(x=>x.trim()))
+ .filter(c=>/^\d{4}-\d{2}-\d{2}$/.test(c[0])&&c[1]).map(c=>({ch,date:c[0],cat:c[1],peak:+c[2]||0,avg:+c[3]||0,chat:+c[4]||0,cheese:+c[5]||0,hours:+c[6]||0}))}
+function agg(a){if(!a.length)return null;const h=S(a,'hours');
+ return{peak:Math.max(...a.map(r=>r.peak)),avg:h>0?a.reduce((x,r)=>x+r.avg*r.hours,0)/h:S(a,'avg')/a.length,chat:S(a,'chat'),cheese:S(a,'cheese'),hours:h,days:new Set(a.map(r=>r.date)).size}}
+const keyOf=r=>st.mode==='day'?r.date:wk(r.date);
+function lab(k){return st.mode==='day'?md(k)+'('+DOW[dt(k).getDay()]+')':md(k)+'~'+md(addD(k,6))}
+const pct=(c,p)=>p?(c-p)/p*100:null;
+function delta(c,p){const v=pct(c,p);if(v==null)return['<span class="d na">비교 데이터 없음</span>','비교 데이터 없음'];const s=(v>=0?'+':'')+v.toFixed(0)+'%';
+ return['<span class="d '+(v>=0?'up':'dn')+'">'+(v>=0?'▲ ':'▼ ')+Math.abs(v).toFixed(0)+'% '+(st.mode==='day'?'전일':'전주')+'</span>',s]}
+const sg=v=>v==null?'-':'<span class="'+(v>=0?'up':'dn')+'">'+(v>=0?'+':'')+v.toFixed(0)+'%</span>';
+const byCat=a=>{const m=new Map();a.forEach(r=>(m.get(r.cat)||m.set(r.cat,[]).get(r.cat)).push(r));return[...m].map(([c,x])=>({c,n:x.length,...agg(x)}))};
+
+function render(){
+ const real=D.channels.length>0,chs=real?D.channels:[SC],all=real?D.rows:SR;
+ if(!chs.some(c=>c.id===st.ch))st.ch=chs[0].id;
+ const ch=chs.find(c=>c.id===st.ch);
+ $('#chips').innerHTML=chs.map(c=>{const on=c.id===st.ch,ask=real&&st.ask===c.id;return `<span class="chip${on?' on':''}"><button class="cn" data-id="${c.id}" aria-pressed="${on}">${esc(c.name)}</button>${real?`<button class="cx${ask?' ask':''}" data-del="${c.id}" aria-label="${esc(c.name)} 삭제">${ask?'삭제할까요?':'×'}</button>`:''}</span>`}).join('');
+ $('#chips').querySelectorAll('.cn').forEach(b=>b.onclick=()=>{st.ch=b.dataset.id;st.per=null;st.ask=null;st.v=null;st.vf=null;st.vAsk=false;render()});
+ $('#chips').querySelectorAll('.cx').forEach(b=>b.onclick=()=>{const id=b.dataset.del;if(st.ask!==id){st.ask=id;render();return}delCh(id)});
+ $('#link').innerHTML=real?`<a href="https://chzzk.naver.com/${ch.id}" target="_blank" rel="noopener">치지직 채널 열기</a>`:'';
+ $('#src').textContent=real?ch.name+' 채널의 데이터만 보여줍니다.':'샘플 데이터입니다. 위에 스트리머 링크를 추가하면 그 스트리머만 보여드려요.';
+ const cr=all.filter(r=>r.ch===ch.id),g=new Map();
+ cr.forEach(r=>{const k=keyOf(r);(g.get(k)||g.set(k,[]).get(k)).push(r)});
+ const keys=[...g.keys()].sort();
+ if(!keys.length){['#chart','#tbl','#seg','#cat','#ins','#rep'].forEach(s=>{$(s).innerHTML='';if(s==='#rep')$(s).value=''});$('#per').innerHTML='';
+  $('#kpi').innerHTML='<div style="grid-column:1/-1">아직 데이터가 없어요. 아래 “데이터 불러오기”에 붙여넣어 주세요.</div>';$('#dt').open=true;return}
+ if(!keys.includes(st.per))st.per=keys[keys.length-1];
+ $('#per').innerHTML=[...keys].reverse().map(k=>`<option value="${k}">${lab(k)}</option>`).join('');$('#per').value=st.per;
+ const i=keys.indexOf(st.per),cur=agg(g.get(st.per)),prev=i>0?agg(g.get(keys[i-1])):null;
+ $('#kpi').innerHTML=METRICS.map(([k,l,u])=>`<div><small>${l}</small><b>${k==='hours'?cur[k].toFixed(1):N(cur[k])}<span class="note"> ${u}</span></b>${k==='hours'?'':delta(cur[k],prev&&prev[k])[0]}</div>`).join('');
+ const win=keys.slice(Math.max(0,i-(st.mode==='day'?14:8)+1),i+1);
+ $('#tabs').innerHTML=METRICS.slice(0,4).map(([k,l])=>`<button aria-pressed="${st.m===k}" data-m="${k}">${l}</button>`).join('');
+ $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{st.m=b.dataset.m;render()});
+ const vals=win.map(k=>agg(g.get(k))[st.m]),W=640,H=200,p=6,bw=(W-p*2)/win.length,mx=Math.max(...vals,1);let svg='';
+ vals.forEach((v,j)=>{const h=(H-50)*v/mx,x=p+j*bw+bw*.15,y=H-24-h,on=win[j]===st.per;
+  svg+=`<rect x="${x}" y="${y}" width="${bw*.7}" height="${h}" rx="3" fill="var(--ac)" opacity="${on?1:.3}"/>`;
+  if(on||win.length<=8)svg+=`<text x="${x+bw*.35}" y="${y-4}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">${N(v)}</text>`;
+  if(win.length<=10||j%2===0)svg+=`<text x="${x+bw*.35}" y="${H-7}" text-anchor="middle" font-size="10" fill="var(--mut)">${md(win[j])}</text>`});
+ $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${METRICS.find(m=>m[0]===st.m)[1]} 추이">${svg}</svg>`;
+ const line=(l,a,c)=>`<tr${c?' class="sel"':''}><td>${l}</td><td>${N(a.peak)}</td><td>${N(a.avg)}</td><td>${N(a.chat)}</td><td>${N(a.cheese)}</td><td>${a.hours.toFixed(1)}h</td></tr>`;
+ $('#tbl').innerHTML='<tr><th>기간</th><th>최고</th><th>평균</th><th>채팅수</th><th>치즈(원)</th><th>방송시간</th></tr>'+[...win].reverse().map(k=>line(lab(k),agg(g.get(k)),k===st.per)).join('');
+ const sr=g.get(st.per);
+ $('#seg').innerHTML='<tr><th>날짜</th><th class="l">카테고리</th><th>평균</th><th>최고</th><th>채팅수</th><th>치즈(원)</th><th>시간</th><th>직전 구간 대비 평균</th></tr>'+sr.map((r,j)=>{const q=sr[j-1],ch2=q&&q.date===r.date;
+  return `<tr><td>${md(r.date)}</td><td class="l">${esc(r.cat)}</td><td>${N(r.avg)}</td><td>${N(r.peak)}</td><td>${N(r.chat)}</td><td>${N(r.cheese)}</td><td>${r.hours}h</td><td>${ch2?esc(q.cat)+' → '+sg(pct(r.avg,q.avg)):'-'}</td></tr>`}).join('');
+ const cs=byCat(cr).sort((a,b)=>b.avg-a.avg),tot=agg(cr),ok=cs.filter(c=>c.hours>=3),pool=ok.length?ok:cs;
+ const top=f=>pool.reduce((a,b)=>f(b)>f(a)?b:a),hc=c=>c.chat/(c.hours||1),hz=c=>c.cheese/(c.hours||1);
+ const b1=top(c=>c.avg),b2=top(hc),b3=top(hz);
+ $('#ins').innerHTML=cs.length<2?'<li>카테고리가 2개 이상 쌓이면 비교 결과가 나와요.</li>':
+  `<li>평균 시청자가 가장 높은 카테고리: <b>${esc(b1.c)}</b> (${N(b1.avg)}명, 전체 평균 대비 ${sg(pct(b1.avg,tot.avg))})</li>`+
+  `<li>시간당 채팅이 가장 많은 카테고리: <b>${esc(b2.c)}</b> (${N(hc(b2))}건/시간)</li>`+
+  `<li>시간당 치즈 수익이 가장 높은 카테고리: <b>${esc(b3.c)}</b> (${N(hz(b3))}원/시간)</li>`;
+ $('#cat').innerHTML='<tr><th class="l">카테고리</th><th>구간 수</th><th>방송시간</th><th>평균 시청자</th><th>전체 평균 대비</th><th>최고</th><th>채팅/시간</th><th>치즈/시간</th></tr>'+cs.map(c=>
+  `<tr><td class="l">${esc(c.c)}${c.hours<3?' ※':''}</td><td>${c.n}</td><td>${c.hours.toFixed(1)}h</td><td>${N(c.avg)}</td><td>${sg(pct(c.avg,tot.avg))}</td><td>${N(c.peak)}</td><td>${N(hc(c))}</td><td>${N(hz(c))}</td></tr>`).join('');
+ $('#rep').value=report(ch,sr,g,cur,prev);
+}
+function report(ch,sr,g,cur,prev){
+ const u=st.mode==='day'?'일간':'주간',pv=st.mode==='day'?'전일':'전주',d=k=>delta(cur[k],prev&&prev[k])[1];
+ const L=[`[아르포나] ${ch.name} 님 ${u} 리포트 (${lab(st.per)})`,
+ `▪ 최고 시청자: ${N(cur.peak)}명 (${pv} 대비 ${d('peak')})`,`▪ 평균 시청자: ${N(cur.avg)}명 (${pv} 대비 ${d('avg')})`,
+ `▪ 채팅수: ${N(cur.chat)}건 (${pv} 대비 ${d('chat')})`,`▪ 치즈 수익: ${N(cur.cheese)}원 (${pv} 대비 ${d('cheese')})`,
+ st.mode==='week'?`▪ 방송: ${cur.days}일 / 총 ${cur.hours.toFixed(1)}시간`:`▪ 방송시간: ${cur.hours.toFixed(1)}시간`];
+ const cs=byCat(sr).sort((a,b)=>b.avg-a.avg);
+ if(cs.length)L.push('▪ 카테고리별 평균 시청자: '+cs.map(c=>`${c.c} ${N(c.avg)}명(${c.hours.toFixed(1)}h)`).join(' / '));
+ if(st.mode==='week'){const b=sr.reduce((x,r)=>r.peak>x.peak?r:x);L.push(`▪ 최고 기록: ${md(b.date)}(${DOW[dt(b.date).getDay()]}) ${b.cat} 방송, 최고 시청자 ${N(b.peak)}명`)}
+ return L.join('\n')}
+
+$('#mDay').onclick=()=>setMode('day');$('#mWeek').onclick=()=>setMode('week');
+function setMode(m){st.mode=m;st.per=null;$('#mDay').setAttribute('aria-pressed',m==='day');$('#mWeek').setAttribute('aria-pressed',m==='week');render()}
+function delCh(id){const i=D.channels.findIndex(c=>c.id===id);if(i<0)return;D.channels.splice(i,1);D.rows=D.rows.filter(r=>r.ch!==id);D.vods=(D.vods||[]).filter(v=>v.ch!==id);save();st.ask=null;if(st.ch===id){const n=D.channels[Math.min(i,D.channels.length-1)];st.ch=n?n.id:null}st.per=null;st.v=null;st.vf=null;render()}
+$('#per').onchange=e=>{st.per=e.target.value;render()};
+$('#addc').onclick=()=>{const m=$('#url').value.match(/[0-9a-f]{32}/i),n=$('#nm').value.trim();
+ if(!m){$('#amsg').textContent='채널 링크에서 채널 ID를 찾지 못했어요. chzzk.naver.com/ 뒤에 32자리 ID가 붙은 채널 주소를 넣어 주세요.';return}
+ if(!n){$('#amsg').textContent='스트리머 이름을 입력해 주세요.';return}
+ const id=m[0].toLowerCase();if(D.channels.some(c=>c.id===id)){st.ch=id;$('#amsg').textContent='이미 추가된 스트리머예요.';render();return}
+ D.channels.push({id,name:n});save();st.ch=id;st.per=null;$('#url').value=$('#nm').value='';
+ $('#amsg').textContent=n+' 님을 추가했어요. 아래에서 데이터를 불러오세요.';render()};
+$('#copy').onclick=async()=>{const t=$('#rep');let ok=false;try{await navigator.clipboard.writeText(t.value);ok=true}catch(e){t.select();try{ok=document.execCommand('copy')}catch(e2){}}
+ $('#cmsg').textContent=ok?'복사했어요.':'복사하지 못했어요. 문구를 직접 선택해 복사해 주세요.'};
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#imp').value=r.result};r.readAsText(f)};
+$('#apply').onclick=()=>{if(!D.channels.length){$('#imsg').textContent='먼저 위에서 스트리머 링크를 추가해 주세요.';return}
+ const p=parse($('#imp').value,st.ch);if(!p.length){$('#imsg').textContent='읽을 수 있는 줄이 없어요. 첫 열이 2026-11-05 형식의 날짜인지 확인해 주세요.';return}
+ D.rows=D.rows.filter(r=>r.ch!==st.ch).concat(p);save();st.per=null;$('#imsg').textContent=p.length+'건을 불러왔어요. 이 스트리머의 기존 데이터는 새 데이터로 바뀌었어요.';render()};
+/* ===== 노래방송 타임라인 · 편집점 ===== */
+D.vods=D.vods||[];st.v=null;st.vf=null;st.vAsk=false;st.em='short';st.ask=null;
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+const tp=s=>{s=String(s).trim();if(!/^\d+(:\d{1,2}){1,2}$/.test(s))return null;const a=s.split(':').map(Number);return a.length===3?a[0]*3600+a[1]*60+a[2]:a[0]*60+a[1]};
+const ft=n=>{n=Math.max(0,Math.round(n));const h=Math.floor(n/3600),m=Math.floor(n%3600/60);return(h?h+':'+pad(m):m)+':'+pad(n%60)};
+const clip=(t,n)=>t.length>n?t.slice(0,Math.max(1,n-1))+'…':t;
+const vodsOf=()=>D.vods.filter(v=>v.ch===st.ch);
+const curV=()=>{const a=vodsOf();return a.find(v=>v.id===st.v)||a[0]||null};
+const bstep=m=>{if(m.length<2)return 60;const d=m.slice(1).map((r,i)=>r.t-m[i].t).filter(x=>x>0).sort((a,b)=>a-b);return d.length?d[Math.floor(d.length/2)]:60};
+const songAt=(v,t)=>v.songs.find(s=>t>=s.s&&t<s.e)||null;
+const vEnd=v=>Math.max(v.len||0,60,...v.songs.map(s=>s.e),...(v.mins||[]).map(r=>r.t+bstep(v.mins)));
+function parseSongs(txt,len){const re=/^\s*(\d+(?::\d{1,2}){1,2})\s*(?:[-~–]\s*(\d+(?::\d{1,2}){1,2}))?\s+(.+?)\s*$/;
+ const a=txt.split(/\r?\n/).map(l=>l.match(re)).filter(Boolean).map(m=>({s:tp(m[1]),e:m[2]?tp(m[2]):null,t:m[3]})).filter(x=>x.s!=null).sort((x,y)=>x.s-y.s);
+ a.forEach((x,i)=>{if(x.e==null||x.e<=x.s){const n=a[i+1];if(n){x.e=n.s}else if(len>x.s){x.e=len}else{x.e=x.s+240;x.est=true}}});return a}
+function parseMins(txt){const T=x=>/^\d+$/.test(x)?+x*60:tp(x);
+ return txt.split(/\r?\n/).map(l=>l.split(/[,\t]/).map(x=>x.trim())).map(c=>({t:T(c[0]||''),v:+c[1],c:+c[2]})).filter(r=>r.t!=null&&isFinite(r.v)&&isFinite(r.c)).sort((a,b)=>a.t-b.t)}
+function songStats(v){const m=v.mins||[],k=bstep(m)/60;return v.songs.map(g=>{if(!m.length)return{...g};
+ const inn=m.filter(r=>r.t>=g.s&&r.t<g.e),pre=m.filter(r=>r.t>=g.s-300&&r.t<g.s),av=a=>a.length?avg(a.map(r=>r.v)):null;
+ return{...g,avg:av(inn),peak:inn.length?Math.max(...inn.map(r=>r.v)):null,chatMin:inn.length?inn.reduce((x,r)=>x+r.c,0)/(inn.length*k):null,pre:av(pre)}})}
+function peaks(v){const m0=v.mins||[],m=m0.filter(r=>songAt(v,r.t));if(m.length<5)return[];const bs=bstep(m0),k=bs/60,cs=m.map(r=>r.c/k),mu=avg(cs),sd=Math.sqrt(avg(cs.map(x=>(x-mu)**2)))||1;
+ const dv=m.map((r,i)=>i&&m[i-1].t===r.t-bs?r.v-m[i-1].v:0),mv=avg(dv),sv=Math.sqrt(avg(dv.map(x=>(x-mv)**2)))||1;
+ const sc=m.map((r,i)=>({t:r.t,cpm:cs[i],x:cs[i]/(mu||1),score:(cs[i]-mu)/sd+0.5*(dv[i]-mv)/sv}));
+ const loc=sc.filter((p,i)=>p.score>=1&&(i===0||p.score>=sc[i-1].score)&&(i===sc.length-1||p.score>sc[i+1].score)).sort((a,b)=>b.score-a.score);
+ const out=[];loc.forEach(p=>{if(out.every(o=>Math.abs(o.t-p.t)>=90))out.push(p)});return out}
+function mkShort(v,n){const L=vEnd(v);return peaks(v).slice(0,n).map(p=>{const sg=songAt(v,p.t),lo=sg?sg.s:0,hi=sg?sg.e:L;let s=Math.max(lo,p.t-30),e=Math.min(hi,s+45);if(e-s<20)s=Math.max(lo,e-45);
+ return{s,e,title:(sg?sg.t:'방송')+' 반응 구간',why:`채팅 ${N(p.cpm)}건/분, 평균의 ${p.x.toFixed(1)}배`,src:'data'}}).sort((a,b)=>a.s-b.s)}
+function mkLong(v,mins){const L=vEnd(v),tgt=mins*60,out=[];let sum=0;
+ for(const p of peaks(v)){if(sum>=tgt)break;const sg=songAt(v,p.t),lo=sg?sg.s:0,hi=sg?sg.e:L,s=Math.max(lo,p.t-45),e=Math.min(hi,p.t+75);
+  if(e-s<30||out.some(o=>s<o.e&&e>o.s))continue;out.push({s,e,title:(sg?sg.t:'방송')+' 하이라이트',why:`채팅 ${N(p.cpm)}건/분, 평균의 ${p.x.toFixed(1)}배`,src:'data'});sum+=e-s}
+ return out.sort((a,b)=>a.s-b.s)}
+function tl(v){const L=vEnd(v),W=640,H=100,x=t=>6+(W-12)*t/L;let s='';
+ peaks(v).slice(0,15).forEach(p=>s+=`<rect x="${x(p.t)-1}" y="6" width="3" height="16" rx="1" fill="var(--dn)"/>`);
+ v.songs.forEach(g=>{const a=x(g.s),w=Math.max(2,x(g.e)-a);s+=`<rect x="${a}" y="28" width="${w}" height="30" rx="3" fill="var(--ac)" stroke="var(--sf)" stroke-width="2"/>`;
+  if(w>56)s+=`<text x="${a+6}" y="47" font-size="11" font-weight="700" fill="var(--bg)">${esc(clip(g.t,Math.floor(w/10)))}</text>`});
+ (v.cands||[]).forEach(c=>s+=`<rect x="${x(c.s)}" y="64" width="${Math.max(3,x(c.e)-x(c.s))}" height="10" rx="2" fill="var(--up)"/>`);
+ const stp=[300,600,900,1800,3600,7200].find(k=>L/k<=10)||7200;
+ for(let t=0;t<=L;t+=stp)s+=`<text x="${x(t)}" y="94" font-size="10" fill="var(--mut)" text-anchor="${t===0?'start':'middle'}">${ft(t)}</text>`;
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="곡별 타임라인">${s}</svg>`}
+function renderV(){
+ const a=vodsOf(),v=curV();
+ $('#vsel').innerHTML=a.map((x,i)=>`<option value="${x.id}">${esc(x.title||'다시보기 '+(i+1))}</option>`).join('');
+ $('#vsel').hidden=!v;$('#vdel').hidden=!v;$('#vbody').hidden=!v;$('#ebody').hidden=!v;$('#vempty').hidden=!!v;
+ if(!v)return;
+ st.v=v.id;$('#vsel').value=v.id;$('#vdel').textContent=st.vAsk?'정말 삭제할까요?':'삭제';
+ if(st.vf!==v.id){st.vf=v.id;$('#vt').value=v.title||'';$('#vu').value=v.url||'';$('#vl').value=v.len?ft(v.len):'';$('#vs').value=v.songsTxt||'';$('#vm').value=v.minsTxt||'';$('#vmsg').textContent='';$('#emsg').textContent='영상 화면은 분석하지 않아요. 입력한 곡 구간, 분당 시청자·채팅, 메모만 근거로 후보를 만듭니다.'}
+ $('#vgo').innerHTML=/^https?:\/\//i.test(v.url||'')?`<a href="${esc(v.url)}" target="_blank" rel="noopener">다시보기 열기</a>`:'';
+ const ss=songStats(v),m=v.mins||[],hasM=m.length>0;
+ if(!v.songs.length){$('#vtl').innerHTML='';$('#vtab').innerHTML='';$('#vins').innerHTML='';$('#etab').innerHTML='';return}
+ $('#vtl').innerHTML=tl(v);
+ let ins=[];
+ const totS=ss.reduce((x,g)=>x+(g.e-g.s),0);ins.push(`노래 구간 합계 ${ft(totS)} (방송의 ${Math.round(totS/vEnd(v)*100)}%). 아래 수치는 노래 구간만 기준이에요`);
+ if(hasM){const k=bstep(m)/60,ms=m.filter(r=>songAt(v,r.t));if(ms.length)ins.push(`노래 구간 전체: 평균 시청자 ${N(avg(ms.map(r=>r.v)))}명, 분당 채팅 ${N(avg(ms.map(r=>r.c))/k)}건 (게임 방송과 비교할 때 기준값으로 쓰세요)`);
+  const w=ss.filter(g=>g.avg!=null);
+  if(w.length>=2){const b=w.reduce((x,y)=>y.avg>x.avg?y:x),c=w.reduce((x,y)=>y.chatMin>x.chatMin?y:x);ins.push(`평균 시청자가 가장 높은 곡: <b>${esc(b.t)}</b> (${N(b.avg)}명)`);ins.push(`분당 채팅이 가장 많은 곡: <b>${esc(c.t)}</b> (${N(c.chatMin)}건)`)}}
+ $('#vins').innerHTML=ins.map(x=>`<li>${x}</li>`).join('');
+ $('#vtab').innerHTML='<tr><th class="l">곡</th><th>시작</th><th>종료</th><th>길이</th>'+(hasM?'<th>평균 시청자</th><th>최고</th><th>채팅/분</th><th>직전 5분 대비</th>':'')+'</tr>'+
+  ss.map(g=>`<tr><td class="l">${esc(g.t)}</td><td>${ft(g.s)}</td><td>${ft(g.e)}${g.est?' ~':''}</td><td>${ft(g.e-g.s)}</td>`+(hasM?(g.avg==null?'<td colspan="4" class="na" style="text-align:left">이 구간 데이터 없음</td>':`<td>${N(g.avg)}</td><td>${N(g.peak)}</td><td>${N(g.chatMin)}</td><td>${g.pre!=null?sg(pct(g.avg,g.pre)):'-'}</td>`):'')+'</tr>').join('');
+ const cs=v.cands||[];
+ $('#etab').innerHTML=cs.length?'<tr><th class="l">구간</th><th>길이</th><th class="l">곡</th><th class="l">제목</th><th class="l">근거</th><th>출처</th></tr>'+cs.map(c=>{const g=songAt(v,c.s);return `<tr><td class="l">${ft(c.s)}~${ft(c.e)}</td><td>${ft(c.e-c.s)}</td><td class="l">${g?esc(g.t):'-'}</td><td class="l">${esc(c.title)}</td><td class="l" style="white-space:normal;min-width:220px">${esc(c.why||'')}</td><td>${c.src==='ai'?'Claude':'데이터'}</td></tr>`}).join(''):'';
+}
+const _r=render;render=function(){_r();renderV();decorate()};
+async function cp(text,el){let ok=false;try{await navigator.clipboard.writeText(text);ok=true}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{ok=document.execCommand('copy')}catch(e2){}t.remove()}
+ el.textContent=ok?'복사했어요.':'복사하지 못했어요. 직접 선택해 복사해 주세요.'}
+$('#vsel').onchange=e=>{st.v=e.target.value;st.vf=null;st.vAsk=false;render()};
+$('#vnew').onclick=()=>{const id=Date.now().toString(36);D.vods.push({id,ch:st.ch,title:'',url:'',len:0,songs:[],mins:[],songsTxt:'',minsTxt:'',cands:[]});st.v=id;st.vf=null;st.vAsk=false;save();render()};
+$('#vdel').onclick=()=>{const v=curV();if(!v)return;if(!st.vAsk){st.vAsk=true;render();return}D.vods=D.vods.filter(x=>x.id!==v.id);st.vAsk=false;st.v=null;st.vf=null;save();render()};
+$('#vapply').onclick=()=>{const v=curV();if(!v)return;
+ v.title=$('#vt').value.trim();v.url=$('#vu').value.trim();const l=$('#vl').value.trim();v.len=l?(tp(l)||0):0;
+ v.songsTxt=$('#vs').value;v.minsTxt=$('#vm').value;v.songs=parseSongs(v.songsTxt,v.len);v.mins=parseMins(v.minsTxt);v.cands=[];
+ save();st.vf=null;st.vAsk=false;render();
+ $('#vmsg').textContent=v.songs.length?`곡 ${v.songs.length}개를 적용했어요.`+(v.mins.length?` 분당 데이터 ${v.mins.length}줄.`:''):'읽을 수 있는 곡이 없어요. “0:05:20 곡명” 형식인지 확인해 주세요.'};
+$('#vcopy').onclick=()=>{const v=curV();if(!v||!v.songs.length){$('#vmsg').textContent='먼저 곡 목록을 적용해 주세요.';return}cp(v.songs.map(g=>ft(g.s)+' '+g.t).join('\n'),$('#vmsg'))};
+const setEm=m=>{st.em=m;$('#eShort').setAttribute('aria-pressed',m==='short');$('#eLong').setAttribute('aria-pressed',m==='long');$('#enl').textContent=m==='short'?'개수':'목표 분';$('#en').value=m==='short'?5:10};
+$('#eShort').onclick=()=>setEm('short');$('#eLong').onclick=()=>setEm('long');
+const enVal=()=>Math.max(1,Math.min(20,+$('#en').value||(st.em==='short'?5:10)));
+$('#elocal').onclick=()=>{const v=curV();if(!v)return;if(!v.songs.length){$('#emsg').textContent='먼저 곡 목록을 적용해 주세요.';return}
+ if((v.mins||[]).length<5){$('#emsg').textContent='반응 기준 후보는 분당 시청자·채팅 데이터가 5줄 이상 있어야 찾을 수 있어요. 데이터 없이 짜려면 “Claude로 편집점 짜기”를 쓰세요.';return}
+ v.cands=st.em==='short'?mkShort(v,enVal()):mkLong(v,enVal());save();render();
+ $('#emsg').textContent=v.cands.length?`채팅 반응이 큰 순서로 ${v.cands.length}개를 찾았어요. 반응은 실제 순간보다 늦게 오기 때문에 시작을 30~45초 앞당겼어요.`:'뚜렷하게 튀는 반응 구간이 없어요. 메모를 적고 Claude로 짜 보세요.'};
+let ctl=null;
+$('#eai').onclick=async()=>{const v=curV();if(!v)return;
+ if(ctl){ctl.abort();return}
+ if(!v.songs.length){$('#emsg').textContent='먼저 곡 목록을 적용해 주세요.';return}
+ let sample=null;try{sample=window.claude?await window.claude.use('sample'):null}catch(e){}
+ if(!sample){$('#emsg').textContent='이 화면에서는 Claude 분석을 쓸 수 없어요. “반응 기준 후보 찾기”를 사용해 주세요.';return}
+ const short=st.em==='short',n=enVal(),ss=songStats(v),pk=peaks(v).slice(0,15);
+ const data={방송:v.title||'',총길이초:vEnd(v),곡:ss.map((g,i)=>({번호:i+1,곡명:g.t,시작초:g.s,종료초:g.e,평균시청자:g.avg==null?null:Math.round(g.avg),최고시청자:g.peak==null?null:g.peak,분당채팅:g.chatMin==null?null:Math.round(g.chatMin)})),반응급증:pk.map(p=>({시각초:p.t,분당채팅:Math.round(p.cpm),평균대비배수:+p.x.toFixed(1)})),메모:$('#enote').value.trim().slice(0,1000)};
+ const prompt=`당신은 스트리머 노래방송 편집 보조입니다. 영상은 볼 수 없고 아래 데이터만 근거로 판단합니다.
+요청: ${short?`숏폼 후보 ${n}개`:`롱폼 하이라이트 구간들(합계 약 ${n}분)`}.
+규칙:
+- 시각은 방송 시작 기준 초(정수)입니다. 각 구간은 반드시 한 곡 안에 들어가야 합니다.
+- ${short?'숏폼은 20~60초. 곡의 시작이나 반응 급증 직전에서 시작하고, 곡이 어색하게 끊기지 않는 곳에서 끝냅니다.':'하이라이트는 구간당 45~150초, 합계가 목표 분에 가깝게 하고 시간순으로 정렬합니다.'}
+- 채팅 반응은 실제 순간보다 보통 10~30초 늦게 나타나므로 시작을 그만큼 앞당깁니다.
+- title: ${short?'업로드용 제목 30자 이내':'구간 소제목 20자 이내'}.
+- why: 어떤 데이터(시청자, 채팅, 메모)에 근거했는지 한 문장. 곡 구성(후렴 위치 등)을 일반 지식으로 짐작했다면 "추정"이라고 적습니다.
+- 데이터에 없는 사실(가사, 방송 중 발언)은 지어내지 않습니다. 분당 데이터가 없으면 곡 길이와 메모만으로 판단하고 why에 그렇게 적습니다.
+응답: JSON 배열만. 예: [{"s":320,"e":365,"title":"제목","why":"근거"}]
+데이터:
+${JSON.stringify(data)}`;
+ ctl=new AbortController();$('#eai').textContent='중지';$('#emsg').textContent='Claude가 분석 중이에요. 처음 한 번은 사용 허용 창이 뜰 수 있어요.';
+ try{const res=await sample.json(prompt,{signal:ctl.signal});const arr=Array.isArray(res)?res:(res&&res.items)||[],L=vEnd(v);
+  const out=arr.map(x=>({s:Math.round(+x.s),e:Math.round(+x.e),title:String(x.title||'').slice(0,60),why:String(x.why||'').slice(0,200),src:'ai'})).filter(x=>isFinite(x.s)&&isFinite(x.e)&&x.s>=0&&x.e>x.s&&x.e<=L+30&&x.e-x.s<=600).sort((a,b)=>a.s-b.s).slice(0,20);
+  if(!out.length){$('#emsg').textContent='쓸 수 있는 구간이 나오지 않았어요. 메모를 더 적고 다시 눌러 주세요.'}
+  else{v.cands=out;save();render();$('#emsg').textContent=`Claude가 ${out.length}개를 제안했어요. 영상을 본 것이 아니라 입력 데이터로 짠 후보이니, 편집 전에 해당 구간을 한 번 확인해 주세요.`}}
+ catch(e){const c=e&&e.code;$('#emsg').textContent=c==='cancelled'?'분석을 중지했어요.':['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(c)?'이 계정에서는 Claude 분석을 쓸 수 없어요. “반응 기준 후보 찾기”를 사용해 주세요.':c==='rate_limited'?'요청이 많아요. 잠시 후 다시 눌러 주세요.':c==='invalid_json'?'Claude 응답을 읽지 못했어요. 다시 눌러 주세요.':'일시적인 오류예요. 다시 눌러 주세요.'}
+ finally{ctl=null;$('#eai').textContent='Claude로 편집점 짜기'}};
+$('#ecopy').onclick=()=>{const v=curV();if(!v||!(v.cands||[]).length){$('#emsg').textContent='복사할 후보가 없어요.';return}cp(v.cands.map(c=>`${ft(c.s)}~${ft(c.e)} ${c.title}`).join('\n'),$('#emsg'))};
+$('#eclear').onclick=()=>{const v=curV();if(!v)return;v.cands=[];save();render();$('#emsg').textContent='후보를 비웠어요.'};
+/* ===== 영상 재생 · 클립 저장 ===== */
+let seg=null,vurl=null,recOn=false;
+const PV=()=>$('#pv'),pm=t=>{$('#pmsg').textContent=t};
+const hasVid=()=>!!PV().getAttribute('src');
+$('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;if(vurl)URL.revokeObjectURL(vurl);vurl=URL.createObjectURL(f);const p=PV();p.src=vurl;p.hidden=false;pm(f.name+' 파일을 열었어요. 이제 곡 표와 편집 후보 표의 “▶ 재생”을 눌러 보세요.')};
+function playSeg(s,e,label,queue,onEnd){const p=PV();
+ if(!hasVid()){pm('먼저 위에서 다시보기 영상 파일을 선택해 주세요.');$('#pf').focus();return false}
+ const off=+$('#po').value||0;seg={e:e+off,q:queue||[],onEnd};
+ p.currentTime=Math.max(0,s+off);const pr=p.play();if(pr&&pr.catch)pr.catch(()=>{});
+ pm('재생 중: '+label+' ('+ft(s)+'~'+ft(e)+')');p.scrollIntoView({block:'center',behavior:'smooth'});return true}
+PV().ontimeupdate=()=>{if(!seg)return;const p=PV();if(p.currentTime<seg.e)return;const s=seg;
+ if(s.q.length){const n=s.q.shift();seg=null;playSeg(n.s,n.e,n.l,s.q,s.onEnd);return}
+ seg=null;p.pause();pm('구간 재생이 끝났어요.');if(s.onEnd)s.onEnd()};
+const queueOf=a=>a.map(x=>({s:x.s,e:x.e,l:x.t}));
+$('#pall').onclick=()=>{const v=curV();if(!v||!v.songs.length){pm('먼저 곡 목록을 적용해 주세요.');return}const q=queueOf(v.songs),f=q.shift();playSeg(f.s,f.e,f.l,q)};
+$('#phl').onclick=()=>{const v=curV();if(!v||!(v.cands||[]).length){pm('편집 후보가 아직 없어요. 아래 “편집점 추천”에서 후보를 먼저 만들어 주세요.');return}const q=queueOf(v.cands),f=q.shift();playSeg(f.s,f.e,f.l,q)};
+$('#pstop').onclick=()=>{seg=null;PV().pause();pm('정지했어요.')};
+async function saveClip(s,e,label){const p=PV();if(recOn)return;
+ if(!hasVid()){pm('먼저 위에서 다시보기 영상 파일을 선택해 주세요.');return}
+ const cap=p.captureStream||p.mozCaptureStream;
+ if(!cap||!window.MediaRecorder){pm('이 브라우저에서는 클립 저장을 쓸 수 없어요. 재생은 가능해요.');return}
+ let dl=null;try{dl=window.claude?await window.claude.use('downloads'):null}catch(x){}
+ if(!dl){pm('이 화면에서는 파일 저장을 쓸 수 없어요. 재생은 가능해요.');return}
+ const stream=cap.call(p),mt=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(t=>MediaRecorder.isTypeSupported(t));
+ const r=new MediaRecorder(stream,mt?{mimeType:mt}:undefined),ch=[];r.ondataavailable=ev=>{if(ev.data&&ev.data.size)ch.push(ev.data)};
+ const fin=new Promise(res=>{r.onstop=res});recOn=true;
+ if(!playSeg(s,e,label,[],()=>r.stop())){recOn=false;return}
+ r.start();pm('클립을 녹화하는 중이에요. 실시간으로 약 '+Math.round(e-s)+'초 걸리고, 끝나면 저장 창이 떠요. 그동안 영상을 건드리지 마세요.');
+ await fin;recOn=false;
+ const blob=new Blob(ch,{type:r.mimeType||'video/webm'});
+ if(!blob.size){pm('녹화된 내용이 없어요. 영상 파일이 이 브라우저에서 재생되는지 확인해 주세요.');return}
+ try{await dl.save({filename:(label||'clip').replace(/[\\/:*?"<>|]/g,'_').slice(0,60)+'.webm',data:blob});pm('저장했어요.')}
+ catch(x){pm(x&&x.code==='declined'?'저장하지 않았어요.':'저장하지 못했어요. 다시 시도해 주세요.')}}
+function decorate(){const v=curV();if(!v||!v.songs.length)return;
+ const add=(sel,items)=>{[...document.querySelectorAll(sel+' tr')].forEach((tr,i)=>{const x=i?items[i-1]:null;
+  tr.insertAdjacentHTML('beforeend',x?`<td style="white-space:nowrap"><button class="b sm pl" data-s="${x.s}" data-e="${x.e}" data-l="${esc(x.l)}">▶ 재생</button> <button class="b sm sv" data-s="${x.s}" data-e="${x.e}" data-l="${esc(x.l)}">저장</button></td>`:'<th>영상</th>')})};
+ add('#vtab',v.songs.map(g=>({s:g.s,e:g.e,l:g.t})));
+ if((v.cands||[]).length)add('#etab',v.cands.map(c=>({s:c.s,e:c.e,l:c.title})));
+ document.querySelectorAll('.pl').forEach(b=>b.onclick=()=>playSeg(+b.dataset.s,+b.dataset.e,b.dataset.l));
+ document.querySelectorAll('.sv').forEach(b=>b.onclick=()=>saveClip(+b.dataset.s,+b.dataset.e,b.dataset.l))}
+render();
+</script></body></html>
+
+</body></html>
