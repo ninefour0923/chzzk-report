@@ -83,6 +83,15 @@ button.sm{padding:3px 9px;font-size:12px;cursor:pointer;font-weight:600}
 <h2>기간별 데이터</h2>
 <div class="box sc"><table id="tbl"></table></div>
 
+<h2>시간대별 평균 시청자</h2>
+<p class="note">선택한 기간의 방송을 한국시간 기준 1시간 단위로 나눈 값입니다. 주간은 요일과 상관없이 같은 시간대끼리 합쳐 보여줍니다.</p>
+<div class="box">
+ <ul class="ins" id="hins"></ul>
+ <div id="hchart"></div>
+ <div class="sc"><table id="htbl"></table></div>
+ <p class="note">그 시간대에 방송한 시간이 30분 미만이면 표본이 적어 참고용입니다(※). 막대 위에 마우스를 올리면 자세한 값이 보여요.</p>
+</div>
+
 <h2>카테고리 전환 구간</h2>
 <p class="note">선택한 기간의 방송을 카테고리가 바뀐 지점마다 나눈 기록입니다.</p>
 <div class="box sc"><table id="seg"></table></div>
@@ -125,6 +134,16 @@ const SR=(()=>{const C=[['저스트 채팅',100,60],['노래',150,14],['리그 �
    out.push({ch:'sample',date:fmt(d),cat:c,peak:Math.round(avg*(1.4+r()*.6)),avg,chat:Math.round(h*cf*avg/10*(.8+r()*.4)),cheese:Math.round(avg*h*(3+r()*5))*100,hours:h})})}
  return out})();
 
+const SH=(()=>{const o=[];SR.forEach((r,i)=>{let m=Math.round(r.hours*60),j=0;while(m>0){const t=Math.min(60,m),a=Math.round(r.avg*(.85+.15*((i+j)%3)));
+ o.push({ch:'sample',date:r.date,h:(19+i%4+j)%24,avg:a,peak:Math.round(a*1.4),mins:t,chat:Math.round(r.chat*t/(r.hours*60)),cheese:Math.round(r.cheese*t/(r.hours*60)),cat:r.cat});m-=t;j++}});return o})();
+function hourAgg(a){const m=new Map();
+ a.forEach(r=>{let x=m.get(r.h);if(!x){x={h:r.h,mins:0,w:0,peak:0,chat:0,cheese:0,d:new Set(),c:new Map()};m.set(r.h,x)}
+  x.mins+=r.mins;x.w+=r.avg*r.mins;x.peak=Math.max(x.peak,r.peak);x.chat+=r.chat;x.cheese+=r.cheese;x.d.add(r.date);
+  if(r.cat)x.c.set(r.cat,(x.c.get(r.cat)||0)+r.mins)});
+ return[...m.values()].map(x=>({h:x.h,mins:x.mins,avg:x.mins?x.w/x.mins:0,peak:x.peak,chat:x.chat,cheese:x.cheese,days:x.d.size,cat:[...x.c].sort((p,q)=>q[1]-p[1]).map(e=>e[0])[0]||''})).sort((p,q)=>p.h-q.h)}
+const hl=h=>pad(h)+':00~'+pad((h+1)%24)+':00';
+const pickBest=(hs,min)=>{const ok=hs.filter(x=>x.mins>=min),p=ok.length?ok:hs;return p.length?p.reduce((a,b)=>b.avg>a.avg?b:a):null};
+
 function parse(t,ch){return t.split(/\r?\n/).map(l=>(l.includes('\t')?l.split('\t').map(x=>x.replace(/,/g,'')):l.split(',')).map(x=>x.trim()))
  .filter(c=>/^\d{4}-\d{2}-\d{2}$/.test(c[0])&&c[1]).map(c=>({ch,date:c[0],cat:c[1],peak:+c[2]||0,avg:+c[3]||0,chat:+c[4]||0,cheese:+c[5]||0,hours:+c[6]||0}))}
 function agg(a){if(!a.length)return null;const h=S(a,'hours');
@@ -149,7 +168,7 @@ function render(){
  const cr=all.filter(r=>r.ch===ch.id),g=new Map();
  cr.forEach(r=>{const k=keyOf(r);(g.get(k)||g.set(k,[]).get(k)).push(r)});
  const keys=[...g.keys()].sort();
- if(!keys.length){['#chart','#tbl','#seg','#cat','#ins','#rep'].forEach(s=>{$(s).innerHTML='';if(s==='#rep')$(s).value=''});$('#per').innerHTML='';
+ if(!keys.length){['#chart','#tbl','#hins','#hchart','#htbl','#seg','#cat','#ins','#rep'].forEach(s=>{$(s).innerHTML='';if(s==='#rep')$(s).value=''});$('#per').innerHTML='';
   $('#kpi').innerHTML='<div style="grid-column:1/-1">아직 수집된 데이터가 없어요. 등록한 스트리머가 방송을 시작하면 1분마다 기록돼요.</div>';return}
  if(!keys.includes(st.per))st.per=keys[keys.length-1];
  $('#per').innerHTML=[...keys].reverse().map(k=>`<option value="${k}">${lab(k)}</option>`).join('');$('#per').value=st.per;
@@ -166,6 +185,17 @@ function render(){
  $('#chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${METRICS.find(m=>m[0]===st.m)[1]} 추이">${svg}</svg>`;
  const line=(l,a,c)=>`<tr${c?' class="sel"':''}><td>${l}</td><td>${N(a.peak)}</td><td>${N(a.avg)}</td><td>${N(a.chat)}</td><td>${N(a.cheese)}</td><td>${a.hours.toFixed(1)}h</td></tr>`;
  $('#tbl').innerHTML='<tr><th>기간</th><th>최고</th><th>평균</th><th>채팅수</th><th>치즈(원)</th><th>방송시간</th></tr>'+[...win].reverse().map(k=>line(lab(k),agg(g.get(k)),k===st.per)).join('');
+ const hr=(real?(D.hours||[]):SH).filter(r=>r.ch===ch.id),hs=hourAgg(hr.filter(r=>keyOf(r)===st.per)),hm=new Map(hs.map(x=>[x.h,x])),hb=pickBest(hs,30),hmx=Math.max(...hs.map(x=>x.avg),1);
+ const HW=640,HH=190,hp=6,hbw=(HW-hp*2)/24;let hv='';
+ for(let h=0;h<24;h++){const x=hm.get(h),v=x?x.avg:0,bh=(HH-50)*v/hmx,bx=hp+h*hbw+hbw*.15,by=HH-24-bh,best=hb&&hb.h===h;
+  if(x)hv+=`<rect x="${bx}" y="${by}" width="${hbw*.7}" height="${bh}" rx="3" fill="var(--ac)" opacity="${best?1:(x.mins<30?.25:.5)}"><title>${hl(h)} 평균 ${N(v)}명 · 방송 ${x.mins}분</title></rect>`;
+  if(best)hv+=`<text x="${bx+hbw*.35}" y="${by-4}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">${N(v)}</text>`;
+  if(h%3===0)hv+=`<text x="${bx+hbw*.35}" y="${HH-7}" text-anchor="middle" font-size="10" fill="var(--mut)">${h}시</text>`}
+ $('#hchart').innerHTML=hs.length?`<svg viewBox="0 0 ${HW} ${HH}" width="100%" role="img" aria-label="시간대별 평균 시청자">${hv}</svg>`:'';
+ const hall=hourAgg(hr),hb2=pickBest(hall,60),multi=new Set(hr.map(r=>r.date)).size>1;
+ $('#hins').innerHTML=hb?`<li>선택한 기간에서 평균 시청자가 가장 높은 시간대: <b>${hl(hb.h)}</b> (평균 ${N(hb.avg)}명)</li>`+(hb2&&multi?`<li>전체 기간 기준 평균 시청자가 가장 높은 시간대: <b>${hl(hb2.h)}</b> (평균 ${N(hb2.avg)}명, 방송 ${(hb2.mins/60).toFixed(1)}시간 기준)</li>`:''):'<li>선택한 기간의 시간대별 기록이 아직 없어요.</li>';
+ $('#htbl').innerHTML=hs.length?'<tr><th class="l">시간대</th><th>평균 시청자</th><th>최고</th><th>방송</th><th>채팅수</th><th>치즈(원)</th><th class="l">카테고리</th></tr>'+hs.map(x=>
+  `<tr${hb&&hb.h===x.h?' class="sel"':''}><td class="l">${hl(x.h)}${x.mins<30?' ※':''}</td><td>${N(x.avg)}</td><td>${N(x.peak)}</td><td>${x.mins}분${st.mode==='week'?' ('+x.days+'일)':''}</td><td>${N(x.chat)}</td><td>${N(x.cheese)}</td><td class="l">${esc(x.cat)}</td></tr>`).join(''):'';
  const sr=g.get(st.per);
  $('#seg').innerHTML='<tr><th>날짜</th><th class="l">카테고리</th><th>평균</th><th>최고</th><th>채팅수</th><th>치즈(원)</th><th>시간</th><th>직전 구간 대비 평균</th></tr>'+sr.map((r,j)=>{const q=sr[j-1],ch2=q&&q.date===r.date;
   return `<tr><td>${md(r.date)}</td><td class="l">${esc(r.cat)}</td><td>${N(r.avg)}</td><td>${N(r.peak)}</td><td>${N(r.chat)}</td><td>${N(r.cheese)}</td><td>${r.hours}h</td><td>${ch2?esc(q.cat)+' → '+sg(pct(r.avg,q.avg)):'-'}</td></tr>`}).join('');
@@ -178,9 +208,9 @@ function render(){
   `<li>시간당 치즈 수익이 가장 높은 카테고리: <b>${esc(b3.c)}</b> (${N(hz(b3))}원/시간)</li>`;
  $('#cat').innerHTML='<tr><th class="l">카테고리</th><th>구간 수</th><th>방송시간</th><th>평균 시청자</th><th>전체 평균 대비</th><th>최고</th><th>채팅/시간</th><th>치즈/시간</th></tr>'+cs.map(c=>
   `<tr><td class="l">${esc(c.c)}${c.hours<3?' ※':''}</td><td>${c.n}</td><td>${c.hours.toFixed(1)}h</td><td>${N(c.avg)}</td><td>${sg(pct(c.avg,tot.avg))}</td><td>${N(c.peak)}</td><td>${N(hc(c))}</td><td>${N(hz(c))}</td></tr>`).join('');
- $('#rep').value=report(ch,sr,g,cur,prev);
+ $('#rep').value=report(ch,sr,g,cur,prev,hb);
 }
-function report(ch,sr,g,cur,prev){
+function report(ch,sr,g,cur,prev,hb){
  const u=st.mode==='day'?'일간':'주간',pv=st.mode==='day'?'전일':'전주',d=k=>delta(cur[k],prev&&prev[k])[1];
  const L=[`[아르포나] ${ch.name} 님 ${u} 리포트 (${lab(st.per)})`,
  `▪ 최고 시청자: ${N(cur.peak)}명 (${pv} 대비 ${d('peak')})`,`▪ 평균 시청자: ${N(cur.avg)}명 (${pv} 대비 ${d('avg')})`,
@@ -188,6 +218,7 @@ function report(ch,sr,g,cur,prev){
  st.mode==='week'?`▪ 방송: ${cur.days}일 / 총 ${cur.hours.toFixed(1)}시간`:`▪ 방송시간: ${cur.hours.toFixed(1)}시간`];
  const cs=byCat(sr).sort((a,b)=>b.avg-a.avg);
  if(cs.length)L.push('▪ 카테고리별 평균 시청자: '+cs.map(c=>`${c.c} ${N(c.avg)}명(${c.hours.toFixed(1)}h)`).join(' / '));
+ if(hb)L.push(`▪ 평균 시청자가 가장 높은 시간대: ${hl(hb.h)} (평균 ${N(hb.avg)}명)`);
  if(st.mode==='week'){const b=sr.reduce((x,r)=>r.peak>x.peak?r:x);L.push(`▪ 최고 기록: ${md(b.date)}(${DOW[dt(b.date).getDay()]}) ${b.cat} 방송, 최고 시청자 ${N(b.peak)}명`)}
  return L.join('\n')}
 
@@ -204,7 +235,7 @@ $('#addc').onclick=()=>{const m=$('#url').value.match(/[0-9a-f]{32}/i),n=$('#nm'
 $('#copy').onclick=async()=>{const t=$('#rep');let ok=false;try{await navigator.clipboard.writeText(t.value);ok=true}catch(e){t.select();try{ok=document.execCommand('copy')}catch(e2){}}
  $('#cmsg').textContent=ok?'복사했어요.':'복사하지 못했어요. 문구를 직접 선택해 복사해 주세요.'};
 async function api(path,opt){const r=await fetch(path,opt);if(!r.ok)throw new Error(await r.text());return r.json()}
-async function sync(){try{const s=await api('/api/state');D.channels=s.channels;D.rows=s.rows;st.live=s.live||{};render()}catch(e){$('#src').textContent='수집 서버에 연결하지 못했어요. 수집기(app.py)가 켜져 있는지 확인해 주세요.'}}
+async function sync(){try{const s=await api('/api/state');D.channels=s.channels;D.rows=s.rows;D.hours=s.hourly||[];st.live=s.live||{};render()}catch(e){$('#src').textContent='수집 서버에 연결하지 못했어요. 수집기(app.py)가 켜져 있는지 확인해 주세요.'}}
 $('#addc').onclick=async()=>{const u=$('#url').value.trim();if(!/[0-9a-f]{32}/i.test(u)){$('#amsg').textContent='채널 링크에서 채널 ID를 찾지 못했어요. chzzk.naver.com/ 뒤에 32자리 ID가 붙은 채널 주소를 넣어 주세요.';return}
  try{const r=await api('/api/channels',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u,name:$('#nm').value.trim()})});
   $('#url').value=$('#nm').value='';st.ch=r.id;st.per=null;$('#amsg').textContent=r.name+' 님을 등록했어요. 지금부터 수집해요. 방송 중이면 1분 안에 첫 기록이 쌓여요.';await sync()}

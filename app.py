@@ -263,10 +263,35 @@ def build_rows():
     return rows
 
 
+def build_hourly():
+    """분 단위 기록을 '날짜 + 한국시간 시각(0~23시)'으로 묶는다. 시간대별 평균 시청자 계산용."""
+    with LOCK:
+        recs = DB.execute(
+            "select ch, strftime('%Y-%m-%d', t, 'unixepoch', '+9 hours') as d, "
+            "cast(strftime('%H', t, 'unixepoch', '+9 hours') as integer) as h, cat, "
+            "sum(viewers), max(viewers), count(*), sum(chat), sum(cheese) "
+            "from minutes group by ch, d, h, cat order by ch, d, h").fetchall()
+    acc = {}
+    for ch, d, h, cat, sv, mv, n, chat, cheese in recs:
+        a = acc.setdefault((ch, d, h), {"sv": 0, "peak": 0, "n": 0, "chat": 0, "cheese": 0, "cats": {}})
+        a["sv"] += sv or 0
+        a["peak"] = max(a["peak"], mv or 0)
+        a["n"] += n
+        a["chat"] += chat or 0
+        a["cheese"] += cheese or 0
+        a["cats"][cat or ""] = a["cats"].get(cat or "", 0) + n
+    rows = []
+    for (ch, d, h), a in acc.items():
+        top = max(a["cats"].items(), key=lambda kv: kv[1])[0]
+        rows.append({"ch": ch, "date": d, "h": h, "avg": round(a["sv"] / a["n"], 1), "peak": a["peak"],
+                     "mins": a["n"], "chat": a["chat"], "cheese": a["cheese"], "cat": top})
+    return rows
+
+
 def state():
     with LOCK:
         chs = [{"id": r[0], "name": r[1]} for r in DB.execute("select id,name from channels order by added")]
-    return {"channels": chs, "rows": build_rows(), "live": dict(LIVE)}
+    return {"channels": chs, "rows": build_rows(), "hourly": build_hourly(), "live": dict(LIVE)}
 
 
 # ---------- 웹 서버 ----------
